@@ -1,0 +1,15 @@
+# 配置数据库信息
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/springboot?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  web:
+    resources:
+      static-locations: classpath:/
+
+# 配置mybatis 开启驼峰映射
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html class="iframe-h" lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>网站后台管理模版</title>
+		<link rel="stylesheet" type="text/css" href="/static/admin/layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="/static/admin/css/admin.css" />
+		<link rel="stylesheet" type="text/css" href="/static/admin/css/sweetalert.css" />
+	</head>
+
+	<body>
+		<div class="wrap-container clearfix">
+				<div class="column-content-detail">
+					<form class="layui-form" th:action="@{/find_record_by_name}" method="post">
+						<div class="layui-form-item">
+							<div class="layui-inline tool-btn">
+								<button class="layui-btn layui-btn-small layui-btn-normal addBtn" data-url="article-add.html"><i class="layui-icon">&#xe654;</i></button>
+								<button class="layui-btn layui-btn-small layui-btn-danger delBtn"  data-url="article-add.html"><i class="layui-icon">&#xe640;</i></button>
+								<button class="layui-btn layui-btn-small layui-btn-warm listOrderBtn hidden-xs" data-url="article-add.html"><i class="iconfont">&#xe656;</i></button>
+							</div>
+							<div class="layui-inline">
+								<input type="text" name="name" required lay-verify="required" placeholder="请输入员工姓名" autocomplete="off" class="layui-input">
+							</div>
+							<input class="layui-btn layui-btn-normal" type="submit" lay-submit="search" value="搜索">
+						</div>
+					</form>
+					<div class="layui-form" id="table-list">
+						<table class="layui-table" lay-even lay-skin="nob">
+							<colgroup>
+								<col width="50">
+								<col class="hidden-xs" width="150">
+								<col class="hidden-xs" width="450">
+								<col class="hidden-xs" width="100">
+								<col class="hidden-xs" width="100">
+							</colgroup>
+							<thead>
+							<tr>
+								<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose"></th>
+								<th>id</th>
+								<th>打卡时间</th>
+								<th>员工工号</th>
+								<th>名称</th>
+								<th>性别</th>
+								<th>生日</th>
+								<th>部门</th>
+								<th>打卡类型</th>
+							</tr>
+							</thead>
+							<tbody>
+								<tr th:each="a : ${records}">
+									<td><input type="checkbox" name="" lay-skin="primary" data-id="1"></td>
+									<td class="hidden-xs" th:text="${a.id}"></td>
+									<td class="hidden-xs" th:text="${a.attendanceTime}"></td>
+									<td class="hidden-xs" th:text="${a.jobId}"></td>
+									<td class="hidden-xs" th:text="${a.name}"></td>
+									<td class="hidden-xs" th:text="${a.sex}"></td>
+									<td class="hidden-xs" th:text="${a.birthday}"></td>
+									<td class="hidden-xs" th:if="${a.departmentId eq '01'}">办公室</td>
+									<td class="hidden-xs" th:if="${a.departmentId eq '02'}">财务部门</td>
+									<td class="hidden-xs" th:if="${a.departmentId eq '03'}">销售部门</td>
+									<td class="hidden-xs" th:if="${a.departmentId eq '04'}">生产一部</td>
+									<td class="hidden-xs" th:if="${a.departmentId eq '05'}">生产二部</td>
+									<td class="hidden-xs" th:if="${a.departmentId eq '06'}">生产三部</td>
+									<td class="hidden-xs" th:if="${a.attendanceType eq 0}">上班</td>
+									<td class="hidden-xs" th:if="${a.attendanceType eq 1}">下班</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="page-wrap">
+							<ul class="pagination">
+								<li class="disabled"><span>«</span></li>
+								<li class="active"><span>1</span></li>
+								<li>
+									<a href="#">2</a>
+								</li>
+								<li>
+									<a href="#">»</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+		</div>
+		<script src="/static/admin/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/admin/js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/admin/js/sweetalert-dev.js"></script>
+		<script type="text/javascript">
+			let msg = "[[${msg}]]";
+			if (msg != null && msg != ""){
+				swal(msg,"","success");
+			}
+
+
+		</script>
+	</body>
+
+</html>

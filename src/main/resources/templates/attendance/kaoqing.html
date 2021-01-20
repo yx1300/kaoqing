@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>网站后台管理模版</title>
+		<link rel="stylesheet" type="text/css" href="/static/admin/layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="/static/admin/css/admin.css" />
+		<link rel="stylesheet" type="text/css" href="/static/admin/css/sweetalert.css"/>
+	</head>
+	<body>
+	<div>
+		<table class="layui-table" lay-even lay-skin="nob" style="text-align: center">
+			<thead>
+				<tr>
+					<td colspan="10" style="font-size: 30px">日常考勤管理</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="10"><span id="times" style="font-size: 20px"></span></td>
+				</tr>
+				<tr>
+					<td colspan="10">
+						<a th:href="@{/daka(type=0)}" onclick="return start(0);event.returnValue=false;">
+							<button class="layui-btn layui-btn-big layui-btn-normal" id="start" style="width: 350px;font-size: 20px">上班</button>
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="10">
+							<a th:href="@{/daka(type=1)}" onclick="return start(1);event.returnValue=false;">
+							<button class="layui-btn layui-btn-big layui-btn-normal" id="end" style="width: 350px;font-size: 20px">下班</button>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+	</body>
+	<script src="/static/admin/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/admin/js/module/dialog.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/admin/js/sweetalert-dev.js"></script>
+	<script src="/static/admin/js/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+		function showTime(){
+			//获取当前时间
+			var date = new Date();
+			//将时间转换为中国样式
+			var date1 = date.toLocaleString();
+			// 获取div标签
+			var times = document.getElementById("times");
+			//将时间写入label中
+			times.innerHTML = "考勤时间:"+date1;
+		}
+		// 使用时间定时器实现每秒写一次时间
+		setInterval("showTime();",1000);
+
+		function start(type) {
+			let date = new Date();
+			let hours = date.getHours();
+			if (type == 0){
+				if (hours >= 8 && hours <9){
+					swal("打开成功","","success");
+					$("#start").text("已上班");
+					$("#end").text("下班");
+					return true;
+				}else {
+					swal("已过上班打卡时间点，打卡无效","","error");
+					return false;
+				}
+			}else if (type == 1){
+				if (hours >= 12){
+					swal("打开成功","","success");
+					$("#start").text("上班");
+					$("#end").text("已下班");
+					return true;
+				}else {
+					swal("未到下班打卡时间点，打卡无效","","error");
+					return false;
+				}
+			}
+
+		}
+	</script>
+</html>
